@@ -1,5 +1,6 @@
 {
-  "name": "",
+  "name": "dot-proto",
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
