@@ -25,6 +25,14 @@ export default defineConfig({
       srcDir: "src",
       filename: "sw.js",
       strategies: "injectManifest",
+      manifest: false,
+      injectManifest: {
+        globIgnores: [
+          "**/node_modules/**/*",
+          "$server_build/*",
+          "$server_build/**/*",
+        ],
+      },
       registerType: "autoUpdate",
       // manifest: {},
       devOptions: {

@@ -5,11 +5,16 @@ import {
   createHandlerBoundToURL,
   precacheAndRoute,
 } from "workbox-precaching";
+
+cleanupOutdatedCaches();
 self.skipWaiting();
 clientsClaim();
-let precacheUrls = self.__WB_MANIFEST;
 
-precacheAndRoute(precacheUrls);
+if (import.meta.env.PROD) {
+  let precacheUrls = self.__WB_MANIFEST;
+
+  precacheAndRoute(precacheUrls);
+}
 
 // self.addEventListener("fetch", async (event) => {
 //   if (event.request.url.match(/test\.zip(\?.*)?$/)) {
