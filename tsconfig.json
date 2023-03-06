@@ -2,7 +2,15 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsx": "preserve",
+    "allowJs": true,
     "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noErrorTruncation": true,
     "types": [
       "astro/client",
       "vite-plugin-pwa/client",
