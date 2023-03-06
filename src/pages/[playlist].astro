@@ -132,7 +132,7 @@ const bucketized = groupObjectsByKey(sortedVids, "book");
 
   <div class="flex relative flex-col md:flex-row items-start p-4 gap-4">
     <div class="w-full md:w-3/4 top-0 aspect-video">
-      <VideoPlayer client:load accountId={accountId} videos={sortedVids} />
+      <VideoPlayer client:only accountId={accountId} videos={sortedVids} />
     </div>
     <!-- <div
       class="relative w-full md:w-1/4 md:max-h-[95vh] overflow-y-auto z-0 mt-8 md:mt-0"
@@ -141,7 +141,6 @@ const bucketized = groupObjectsByKey(sortedVids, "book");
         <DownloadToggle client:load />
       </div>
       <Sidebar videos={sortedVids} vidsByBook={bucketized} client:idle />
-    </div>
-  </div> -->
+    </div> -->
   </div>
 </Layout>
