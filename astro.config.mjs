@@ -15,6 +15,10 @@ import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: cloudflare({
+    mode: "directory",
+  }),
   integrations: [
     UnoCSS({
       presets: [presetUno()],
@@ -42,8 +46,4 @@ export default defineConfig({
       },
     }),
   ],
-  output: "server",
-  adapter: cloudflare({
-    mode: "advanced",
-  }),
 });

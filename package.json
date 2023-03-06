@@ -12,11 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^6.1.3",
+    "@astrojs/cloudflare": "6.1.3",
     "@astrojs/solid-js": "^2.0.2",
     "@brightcove/player-loader": "^1.8.0",
     "@zip.js/zip.js": "^2.6.75",
-    "astro": "^2.0.15",
+    "astro": "^2.0.14",
     "client-zip": "^2.3.0",
     "solid-js": "^1.6.11",
     "video.js": "^8.0.4",
