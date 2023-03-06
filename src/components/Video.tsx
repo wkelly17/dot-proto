@@ -7,7 +7,7 @@ import {
   setPlayer,
   setAllVideos,
 } from "../store";
-import brightcovePlayerLoader from "@brightcove/player-loader";
+
 import videojsPlaylistPlugin from "videojs-playlist";
 import {getMp4DownloadSize} from "../utils";
 
