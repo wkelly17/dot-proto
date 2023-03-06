@@ -11,9 +11,6 @@ import solidJs from "@astrojs/solid-js";
 // https://astro.build/config
 import cloudflare from "@astrojs/cloudflare";
 
-// https://astro.build/config
-import node from "@astrojs/node";
-
 import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
