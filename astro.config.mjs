@@ -15,6 +15,11 @@ import AstroPWA from "@vite-pwa/astro";
 
 // https://astro.build/config
 export default defineConfig({
+  // vite: {
+  //   ssr: {
+  //     noExternal: ["video.js", "videojs-playlist"],
+  //   },
+  // },
   output: "server",
   adapter: cloudflare({
     mode: "directory",
