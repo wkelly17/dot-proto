@@ -31,6 +31,7 @@ export default defineConfig({
       strategies: "injectManifest",
       manifest: false,
       injectManifest: {
+        injectionPoint: undefined,
         globIgnores: [
           "**/node_modules/**/*",
           "$server_build/*",
