@@ -1,6 +1,5 @@
 import {onMount, createEffect, createSignal, Show} from "solid-js";
-import $videojs from "video.js";
-const videojs = $videojs.default || $videojs;
+import videojs from "video.js";
 
 // import brightcovePlayerLoader from "@brightcove/player-loader";
 import {
