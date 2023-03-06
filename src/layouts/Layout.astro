@@ -6,6 +6,7 @@ export interface Props {
 
 const {title} = Astro.props;
 // import "video.js/dist/video-js.css";
+
 import "../global.css";
 ---
 
@@ -22,6 +23,8 @@ import "../global.css";
       rel="stylesheet"
     /> -->
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+
     <script src="/src/pwa.ts"></script>
 
     <!-- {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />} -->
