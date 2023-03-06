@@ -8,7 +8,7 @@ import {
   setAllVideos,
 } from "../store";
 
-import videojsPlaylistPlugin from "videojs-playlist";
+// import videojsPlaylistPlugin from "videojs-playlist";
 import {getMp4DownloadSize} from "../utils";
 
 export function VideoPlayer(props: any) {
