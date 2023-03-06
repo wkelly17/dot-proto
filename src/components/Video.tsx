@@ -11,7 +11,7 @@ import {
 import videojsPlaylistPlugin from "videojs-playlist";
 import {getMp4DownloadSize} from "../utils";
 
-export function VideoJs(props: any) {
+export function VideoPlayer(props: any) {
   let videoRef: any;
   const [mp4Src, setMp4Src] = createSignal("");
 
