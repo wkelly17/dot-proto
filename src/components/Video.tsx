@@ -1,5 +1,5 @@
 import {onMount, createEffect, createSignal, Show} from "solid-js";
-import videojs from "video.js";
+// import videojs from "video.js";
 import {
   setPlayerSrc,
   playerSrc,
