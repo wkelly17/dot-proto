@@ -10,7 +10,6 @@ import {
 import brightcovePlayerLoader from "@brightcove/player-loader";
 import videojsPlaylistPlugin from "videojs-playlist";
 import {getMp4DownloadSize} from "../utils";
-import {setInterval} from "timers";
 
 export function VideoJs(props: any) {
   let videoRef: any;
