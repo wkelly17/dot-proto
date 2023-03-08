@@ -37,10 +37,11 @@ export function Thumbnail(props: thumbnailProps) {
     });
     const newSources = props.vid.sources;
     const vidId = props.id;
-
+    // debugger;
     // setPlayerSrc(useableSrc[0]);
     // console.log(props.idx);
-    setPlayerSrc(props.idx);
+    // setPlayerSrc(props.idx);
+    setPlayerSrc(props.vid);
   }
   return (
     <li class="flex gap-2 bg-neutral-200 class relative items-stretch content-stretch my-2">

@@ -2,11 +2,11 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "solid-js"
-  },
-  "types": [
-    "astro/client",
-    "@cloudflare/workers-types",
-    "vite-plugin-pwa/client"
-  ]
+    "jsxImportSource": "solid-js",
+    "types": [
+      "astro/client",
+      "@cloudflare/workers-types",
+      "vite-plugin-pwa/client"
+    ]
+  }
 }

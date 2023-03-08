@@ -9,6 +9,7 @@ const [downloadHref, setDownloadHref] = createSignal("");
 const [allVideos, setAllVideos] = createSignal();
 
 const [filterQuery, setFilterQuery] = createSignal("");
+const [playerLoader, setPlayerLoaderModule] = createSignal();
 
 // HANDLERS
 function manageSelectedLink(
@@ -56,6 +57,7 @@ const batchDownloadHref = createMemo(() => {
   finalHref = `2test.zip?src=${href}&names=${namesHref}&size=${size}`;
   return finalHref;
 });
+
 const filteredPlaylist = createMemo(() => {
   const query = filterQuery();
 
@@ -102,4 +104,6 @@ export {
   batchDownloadHref,
   filteredPlaylist,
   setFilterQuery,
+  setPlayerLoaderModule,
+  playerLoader,
 };

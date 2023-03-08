@@ -10,6 +10,7 @@ import {
 import brightcovePlayerLoader from "@brightcove/player-loader";
 import videojsPlaylistPlugin from "videojs-playlist";
 import {getMp4DownloadSize} from "../utils";
+import {setInterval} from "timers";
 
 export function VideoJs(props: any) {
   let videoRef: any;
@@ -49,76 +50,139 @@ export function VideoJs(props: any) {
   // });
   createEffect(async () => {
     // if (!playerSrc()) return;
-    // let el = document.querySelector("#videoPlayerDiv");
-    let el = document.querySelector("#videoPlayer");
+    let el = document.querySelector("#videoPlayerDiv");
+    // let el = document.querySelector("#videoPlayer");
     if (!el && !player()) return;
     if (!player()) {
       const options = {
         responsive: true,
         fluid: true,
         controls: true,
-        playbackRates: [0.5, 1, 1.5, 2, 2.5, 3],
+        playbackRates: [0.5, 1, 1.5, 2, 2.5],
+        preload: "auto",
+        // html5: {
+        //   vhs: {
+        //     // GOAL_BUFFER_LENGTH: 50,
+        //     experimentalBufferBasedABR: true,
+        //   },
+        // },
       };
-      // const playerInstance = await brightcovePlayerLoader({
+      const playerInstance = await brightcovePlayerLoader({
+        refNode: el,
+        refNodeInsert: "append",
+        accountId: props.accountId,
+        playerId: "9mlrvmAybr",
+        controls: true,
+        // embedType: "iframe",
+        embedType: "in-page",
+        options,
+        // playlistId: "ref:benin-new-testament",
+        // id: 6312743832112,
+        // videoId: "ref:ASE-X-BENINSL_47-1CO_1Corinthiens_01.mp4",
+        embedOptions: {
+          // playlist: true,
+          responsive: true,
+        },
+
+        //   // playlistId: "ref:1745043212224883810",
+      });
+      // const playerInstance = videojs(el, options);
+      // videojs.registerPlugin("playlist", videojsPlaylistPlugin);
+      // playerInstance.playlist(sources);
+      // // playerInstance.ref.on("pause", () => {
+      // //   console.log("PUASE");
+      // // });
+      // debugger;
+      // playerInstance.ref.Vhs.GOAL_BUFFER_LENGTH = 70;
+      // playerInstance.ref.options.vhs.GOAL_BUFFER_LENGTH = 60;
+      setPlayer(playerInstance.ref);
+      // setPlayer(playerInstance);
+      // const mp4 = sources[0].sources?.find((src) => {
+      //   return src && src.container == "MP4";
+      // });
+      // // 2test.zip?src=${href}&names=${namesHref}&size=${size}
+      // const encoded = `2test.zip?src=${encodeURIComponent(
+      //   JSON.stringify([mp4.src])
+      // )}&names=${encodeURIComponent(JSON.stringify([sources[0].slug]))}&size=${
+      //   sources[0].size
+      // }`;
+      // setMp4Src(encoded);
+      // playerInstance.ref.playlist(sources);
+      // playerInstance.ref.on("pause", () => {
+      //   console.log("PUASE");
+      // });
+    } else {
+      // debugger;
+      let currentPlayer: any = player();
+      if (!playerSrc() && playerSrc() != 0) return;
+      // if (!currentPlayer?.paused) {
+      //   currentPlayer.pause();
+      // }
+      // await brightcovePlayerLoader({
       //   refNode: el,
       //   refNodeInsert: "append",
       //   accountId: props.accountId,
       //   playerId: "9mlrvmAybr",
       //   controls: true,
       //   // embedType: "iframe",
-      //   options
+      //   embedType: "in-page",
+      //   // options,
       //   // playlistId: "ref:benin-new-testament",
-      //   // embedOptions: {
-      //   //   playlist: true,
-      //   //   responsive: true,
-      //   // },
+      //   // id: 6312743832112,
+      //   // videoId: "ref:ASE-X-BENINSL_47-1CO_1Corinthiens_01.mp4",
+      //   embedOptions: {
+      //     // playlist: true,
+      //     responsive: true,
+      //   },
 
-      //   // playlistId: "ref:1745043212224883810",
+      //   //   // playlistId: "ref:1745043212224883810",
       // });
-      const playerInstance = videojs(el, options);
-      videojs.registerPlugin("playlist", videojsPlaylistPlugin);
-      playerInstance.playlist(sources);
-      // playerInstance.ref.on("pause", () => {
-      //   console.log("PUASE");
-      // });
-      setPlayer(playerInstance);
-      const mp4 = sources[0].sources?.find((src) => {
-        return src && src.container == "MP4";
-      });
-      // 2test.zip?src=${href}&names=${namesHref}&size=${size}
-      const encoded = `2test.zip?src=${encodeURIComponent(
-        JSON.stringify([mp4.src])
-      )}&names=${encodeURIComponent(JSON.stringify([sources[0].slug]))}&size=${
-        sources[0].size
-      }`;
-      setMp4Src(encoded);
-      // playerInstance.ref.playlist(sources);
-      // playerInstance.ref.on("pause", () => {
-      //   console.log("PUASE");
-      // });
-    } else {
-      let currentPlayer: any = player();
-      if (!playerSrc() && playerSrc() != 0) return;
-      if (!currentPlayer?.paused) {
-        currentPlayer.pause();
-      }
+      currentPlayer.src(playerSrc().sources);
+      currentPlayer.poster(playerSrc().poster);
+      // setInterval(() => {
+      //   let currentPlayer: any = player();
+      //   console.log(currentPlayer.buffered());
+      // }, 200);
+      // window.setInterval(() => {
+      //   let currentPlayer: any = player();
+      //   console.log(currentPlayer.bufferedPercent());
+      // }, 100);
 
-      const newSrc = playerSrc();
-      console.log({newSrc});
-      currentPlayer?.playlist.currentItem(newSrc);
-      console.log(currentPlayer.currentSrc());
-      console.log(currentPlayer.currentType());
-      const corresponding = sources[newSrc];
-      console.log({corresponding});
-      const mp4 = corresponding.sources?.find((src) => {
-        return src && src.container == "MP4";
-      });
-      // debugger;
-      const encoded = `2test.zip?src=${encodeURIComponent(
-        JSON.stringify([mp4.src])
-      )}&names=${corresponding.slug}&size=${corresponding.size}`;
-      setMp4Src(encoded);
-
+      // setTimeout(() => {
+      //   debugger;
+      //   let currentPlayer: any = player();
+      //   const currentPl = currentPlayer.preload();
+      //   console.log({currentPl});
+      //   currentPlayer.preload("auto");
+      //   let newOne = sources[9];
+      //   let link = document.createElement("link");
+      //   link.rel = "prefetch";
+      //   link.as = "fetch";
+      //   link.setAttribute("crossorigin", "anonymous");
+      //   link.href = newOne.sources[0].src;
+      //   link.as = "video";
+      //   document.body.appendChild(link);
+      //   // const testObj = {
+      //   //   poster: newOne.poster,
+      //   //   src: newOne.sources,
+      //   // };
+      //   // currentPlayer.loadMedia(testObj);
+      // }, 5000);
+      // const newSrc = playerSrc();
+      // console.log({newSrc});
+      // currentPlayer?.playlist.currentItem(newSrc);
+      // console.log(currentPlayer.currentSrc());
+      // console.log(currentPlayer.currentType());
+      // const corresponding = sources[newSrc];
+      // console.log({corresponding});
+      // const mp4 = corresponding.sources?.find((src) => {
+      //   return src && src.container == "MP4";
+      // });
+      // // debugger;
+      // const encoded = `2test.zip?src=${encodeURIComponent(
+      //   JSON.stringify([mp4.src])
+      // )}&names=${corresponding.slug}&size=${corresponding.size}`;
+      // setMp4Src(encoded);
       // currentPlayer.load();
       //  currentPlayer.play();
       // }
@@ -134,18 +198,29 @@ export function VideoJs(props: any) {
   return (
     // <div data-vjs-player class="">
     <>
+      {/* <div style="max-width: 1400px;" class="vjs-playlist-player-container">
+        <video-js
+          data-account="6314154063001"
+          data-player="9mlrvmAybr"
+          data-embed="default"
+          controls="true"
+          data-application-id=""
+          class="vjs-fluid"
+        ></video-js>
+      </div> */}
       {/* <p>Source is {playerSrc()?.src} </p> */}
       <div
         class={` mx-auto relative video-js w-full aspect-video`}
         id="videoPlayerDiv"
       >
-        <video class="video-js" id="videoPlayer" src=""></video>
+        {/* <video class="video-js" id="videoPlayer" src=""></video> */}
       </div>
-      <Show when={mp4Src()}>
+
+      {/* <Show when={mp4Src()}>
         <form method="post" action={mp4Src()}>
           <button>Download this video</button>
         </form>
-      </Show>
+      </Show> */}
     </>
     // </div>
   );
