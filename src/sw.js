@@ -7,7 +7,9 @@ import {
 } from "workbox-precaching";
 self.skipWaiting();
 clientsClaim();
+let precacheUrls = self.__WB_MANIFEST;
 
+precacheAndRoute(precacheUrls);
 // self.addEventListener("fetch", async (event) => {
 //   if (event.request.url.match(/test\.zip(\?.*)?$/)) {
 //     ;
