@@ -12,13 +12,12 @@ import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 
 import AstroPWA from "@vite-pwa/astro";
-import {presetAttributify} from "unocss";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     UnoCSS({
-      presets: [presetUno(), presetAttributify()],
+      presets: [presetUno()],
       transformers: [transformerVariantGroup()],
     }),
     solidJs(),
