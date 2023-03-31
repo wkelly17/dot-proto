@@ -1,7 +1,8 @@
 import {defineConfig} from "astro/config";
 import UnoCSS from "unocss/astro";
-import presetUno from "@unocss/preset-uno";
-import transformerVariantGroup from "@unocss/transformer-variant-group";
+import {presetUno} from "unocss";
+import {transformerVariantGroup} from "unocss";
+import {presetAttributify} from "unocss";
 
 // https://astro.build/config
 import solidJs from "@astrojs/solid-js";
@@ -12,7 +13,8 @@ import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 
 import AstroPWA from "@vite-pwa/astro";
-import {presetAttributify} from "unocss";
+import {presetUno} from "unocss";
+// todo: I want to use attirbutify, but it doesn't work with unocss 50's... Try 49's, but it might just not work.
 
 // https://astro.build/config
 export default defineConfig({
