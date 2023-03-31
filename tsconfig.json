@@ -3,10 +3,15 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "baseUrl": ".",
     "types": [
       "astro/client",
       "@cloudflare/workers-types",
       "vite-plugin-pwa/client"
-    ]
+    ],
+    "paths": {
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"]
+    }
   }
 }
