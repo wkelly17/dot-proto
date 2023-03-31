@@ -2,7 +2,6 @@ import {defineConfig} from "astro/config";
 import UnoCSS from "unocss/astro";
 import {presetUno} from "unocss";
 import {transformerVariantGroup} from "unocss";
-import {presetAttributify} from "unocss";
 
 // https://astro.build/config
 import solidJs from "@astrojs/solid-js";
