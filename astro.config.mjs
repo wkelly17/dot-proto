@@ -13,7 +13,6 @@ import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 
 import AstroPWA from "@vite-pwa/astro";
-import {presetUno} from "unocss";
 // todo: I want to use attirbutify, but it doesn't work with unocss 50's... Try 49's, but it might just not work.
 
 // https://astro.build/config
