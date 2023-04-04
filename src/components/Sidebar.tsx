@@ -13,8 +13,8 @@ import {
   batchDownloadHref,
   filteredPlaylist,
   setAllVideos,
-} from "../store";
-import {selectForDownload, setSelectForDownload} from "../store";
+} from "../lib/store";
+import {selectForDownload, setSelectForDownload} from "../lib/store";
 import {Thumbnail} from "./Thumbnail";
 
 interface sideBarPropsI {

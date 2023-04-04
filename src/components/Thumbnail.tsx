@@ -6,7 +6,7 @@ import {
   selectForDownload,
   manageSelectedLink,
   batchDownloadHref,
-} from "../store";
+} from "../lib/store";
 import {
   formatDuration,
   getMp4DownloadSize,

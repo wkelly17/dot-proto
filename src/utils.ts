@@ -62,12 +62,11 @@ interface ObjectGroup {
   [key: string]: object[];
 }
 
-export function groupObjectsByKey(
-  objects: Array<{[key: string]: any}>,
-  key: string
-): object[][] {
-  const result: object[][] = [];
-  const groups: ObjectGroup = {};
+export function groupObjectsByKey<
+  T extends {[key: string]: any},
+  K extends keyof T
+>(objects: T[], key: K): Record<T[K], T[]> {
+  const groups = {} as Record<T[K], T[]>;
 
   // Iterate over each object in the array
   objects.forEach((object) => {
@@ -83,10 +82,5 @@ export function groupObjectsByKey(
     groups[value].push(object);
   });
 
-  // Convert the groups object to an array
-  Object.keys(groups).forEach((value) => {
-    result.push(groups[value]);
-  });
-
-  return result;
+  return groups;
 }

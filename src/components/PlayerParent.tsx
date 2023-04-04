@@ -1,5 +1,5 @@
 import {onMount} from "solid-js";
-import {setPlayerLoaderModule} from "../store";
+import {setPlayerLoaderModule} from "@lib/store";
 
 export function PlayerModuleImporter(props: any) {
   onMount(async () => {

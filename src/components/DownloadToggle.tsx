@@ -5,8 +5,8 @@ import {
   playerSrc,
   batchDownloadHref,
   setFilterQuery,
-} from "../store";
-import {selectForDownload, setSelectForDownload} from "../store";
+} from "../lib/store";
+import {selectForDownload, setSelectForDownload} from "../lib/store";
 import {padLastNumber} from "../utils";
 
 interface sideBarPropsI {}
