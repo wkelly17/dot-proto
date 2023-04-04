@@ -29,3 +29,39 @@
 .video-js img {
   object-fit: cover;
 }
+.vjs-big-play-button {
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  border-radius: 9999px !important;
+  height: 4rem !important;
+  width: 4rem !important;
+  display: inline-grid !important;
+  place-content: center !important;
+  padding: 0 !important;
+  line-height: 2 !important;
+  border: none !important;
+  background: #f3f3f3 !important;
+  color: #9c9c9c !important;
+}
+.vjs-has-started .vjs-big-play-button {
+  display: none !important;
+}
+.vjs-progress-control.vjs-control {
+  width: 100%;
+  position: absolute;
+  top: -100%;
+}
+.vjs-playback-rate {
+  display: inline-block !important;
+}
+.x-scroll-gradient {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.2) 1%,
+    rgba(0, 0, 0, 0) 3%,
+    rgba(0, 0, 0, 0) 97%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+}

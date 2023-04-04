@@ -56,7 +56,9 @@ export default defineConfig({
           // https://unocss.dev/config/theme#usage-in-rules
           /^bg-(.*)$/,
           ([, c], {theme}) => {
-            if (theme.colors[c]) return {"background-color": theme.colors[c]};
+            if (theme.colors[c]) {
+              return {"background-color": theme.colors[c]};
+            }
           },
         ],
       ],

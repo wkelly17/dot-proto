@@ -1,8 +1,9 @@
 import type {IVidWithCustom} from "@customTypes/types";
-import {mobileHorizontalPadding} from "@lib/UI";
-import {playerLoader} from "@lib/store";
+import {mobileHorizontalPadding, CONTAINER} from "@lib/UI";
+import {playerLoader, setPlayerLoaderModule} from "@lib/store";
 import {For, createEffect, createSignal, onMount} from "solid-js";
 import {H1, H2} from "@components/Heading";
+import {IconPlay} from "@components/Icons";
 
 // first poster with button that looks like play button
 // vid data not loaded until a chapter is picked
@@ -15,7 +16,9 @@ interface IVidPlayerProps {
 }
 export function VidPlayer(props: IVidPlayerProps) {
   const firstVid = () => {
-    const defaultVid = props.vids[String(props.book).toUpperCase()];
+    const defaultVid =
+      props.vids[String(props.book).toUpperCase()] ||
+      props.vids[Object.keys(props.vids)[0]];
     const defaultChap = defaultVid[0];
     const firstBook = props.vids[String(props.book?.toUpperCase())];
     if (!firstBook) return {vids: defaultVid, chap: defaultChap};
@@ -28,18 +31,9 @@ export function VidPlayer(props: IVidPlayerProps) {
   };
   const [currentVid, setCurrentVid] = createSignal(firstVid().chap);
   const [currentBook, setCurrentBook] = createSignal(firstVid().vids);
-  // props.vids.find((vid) => {
-  //   return (
-  //     vid.book?.normalize().toUpperCase() ===
-  //       props.book?.normalize().toUpperCase() &&
-  //     String(vid.chapNum) === props.chapter
-  //   );
-  // }) || props.vids[0];
-  // console.log(firstVid());
-  // const firstPoster = () => props.vids.find(vid => vid.book = )
-  // createEffect(async () => {
+  const [vjsPlayer, setVjsPlayer] = createSignal();
+  let player: HTMLDivElement | undefined;
 
-  // });
   function changeVid(chapNum: number | null | undefined) {
     const newVid = currentBook().find((vid) => vid.chapNum == chapNum);
     if (newVid) {
@@ -68,30 +62,82 @@ export function VidPlayer(props: IVidPlayerProps) {
     setCurrentBook(vids);
     const firstBook = vids[0];
     setCurrentVid(firstBook);
+    changePlayerSrc(firstBook);
   }
+  async function changePlayerSrc(vid: IVidWithCustom) {
+    if (!vjsPlayer()) return;
+    changeVid(vid.chapNum);
+    vjsPlayer().src(vid.sources);
+    vjsPlayer().poster(vid.poster);
+  }
+  onMount(async () => {
+    if (playerLoader().loaded) {
+      const vPlayer = await playerLoader().module({
+        refNode: player,
+        refNodeInsert: "replace",
+        accountId: 6314154063001,
+        playerId: "9mlrvmAybr",
+        controls: true,
+        // embedType: "iframe",
+        embedType: "in-page",
+        options: {
+          responsive: true,
+          fluid: true,
+          // aspectRatio: "1:1",
+          fill: true,
+          controls: true,
+          playbackRates: [0.5, 1, 1.5, 2, 2.5],
+          preload: "auto",
+        },
+        // playlistId: "ref:benin-new-testament",
+        // id: 6312743832112,
+        videoId: currentVid().id,
+        embedOptions: {
+          // playlist: true,
+          // responsive: {
+          //   aspectRatio: "1:1",
+          // },
+        },
+      });
+      // set
+      setVjsPlayer(vPlayer.ref);
+    }
+  });
+
   const transparentOverlay =
     "linear-gradient(0deg, hsla(20, 100%, 56%, 1) 0%, hsla(20, 100%, 56%, 0) 55%, hsla(20, 100%, 56%, 0) 75%, hsla(20, 100%, 56%, 1) 100%);";
+
   return (
-    <div class="grid grid-rows-[auto_auto_1fr] h-full overflow-y-auto overflow-x-hidden ">
+    <div
+      class={`grid grid-rows-[auto_auto_1fr] h-full overflow-y-auto overflow-x-hidden ${CONTAINER} sm:(rounded-lg w-full)`}
+    >
       {/* <pre>{JSON.stringify(props.vids, null, 2)}</pre> */}
       {/* <div id="playerContainer"></div> */}
-      <div class="relative" title="vidPoster">
-        <img src={currentVid().poster} />
+      <div class="relative" data-title="vidPoster">
+        <div class="relative">
+          {/* <img src={currentVid().poster} />
+          <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+            <IconPlay classNames="w-16 text-neutral-200" />
+          </span> */}
+          <div class="aspect-12/9 sm:aspect-video sm:(rounded-lg overflow-hidden)">
+            <div ref={player} />
+          </div>
+        </div>
       </div>
       <div
         class="overflow-x-auto scrollbar-hide min-h-150px"
         title="chapterNums"
       >
-        <ul class="flex flex-nowrap gap-1 items-start content-start py-4 overflow-x-auto scrollbar-hide">
+        <ul class="flex flex-nowrap gap-1 items-start content-start py-4 overflow-x-auto scrollbar-hide x-scroll-gradient">
           <For each={currentBook()}>
             {(vid) => {
               return (
                 <li>
                   <button
                     onClick={() => {
-                      changeVid(vid.chapNum);
+                      changePlayerSrc(vid);
                     }}
-                    class={`rounded-full h-8 w-8 inline-grid place-content-center text-center flex-shrink-0 bg-neutral-400 text-white  ${
+                    class={`rounded-full h-8 w-8 inline-grid place-content-center text-center flex-shrink-0 bg-neutral-400 text-white sm:(w-12 h-12) ${
                       vid.chapNum === currentVid().chapNum
                         ? "bg-neutral-800 transform scale-130 mx-3 transition-colors duration-200"
                         : ""
@@ -124,12 +170,13 @@ export function VidPlayer(props: IVidPlayerProps) {
               "pointer-events": "none",
               height: "100%",
             }}
+            class="sm:(hidden)"
           />
-          <ul class="h-full overflow-y-auto scrollbar-hide pt-8 pb-36">
+          <ul class="h-full overflow-y-auto scrollbar-hide pt-8 pb-36 sm:(max-h-[50vh])">
             <For each={Object.entries(props.vids)}>
               {([key, book], idx) => {
                 return (
-                  <li class="py-1 w-full border-y border-base">
+                  <li class="py-1 w-full border-y border-base md:(text-lg py-2)">
                     <button
                       onClick={() => setNewBook(book)}
                       class="inline-flex gap-2 items-center"

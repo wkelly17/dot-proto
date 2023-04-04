@@ -1,3 +1,4 @@
 // @unocss-include
 const mobileHorizontalPadding = "px-3";
-export {mobileHorizontalPadding};
+const CONTAINER = "max-w-[1200px] mx-auto";
+export {mobileHorizontalPadding, CONTAINER};

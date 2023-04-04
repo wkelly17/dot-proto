@@ -135,10 +135,11 @@ const bucketized = groupObjectsByKey<IVidWithCustom, "book">(sortedVids, "book")
 ---
 
 <Layout title="Welcome to Astro.">
-<div class="grid grid-rows-[auto_1fr] h-screen border-5 border-green-300">
+<div class="grid grid-rows-[auto_1fr] h-screen sm:(h-auto)" sm="border border-red-400">
 <Header/>
   <div
     class="grid grid-rows-[auto_auto_1fr] overflow-y-auto"
+  
   >
     <!-- <div class="w-full md:w-3/4 top-0 aspect-video">
       <VideoJs client:only accountId={accountId} videos={sortedVids} />
