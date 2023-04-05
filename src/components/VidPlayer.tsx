@@ -76,7 +76,7 @@ export function VidPlayer(props: IVidPlayerProps) {
   onMount(async () => {
     const interval = setInterval(async () => {
       if (playerLoader() && playerLoader().loaded) {
-        const vPlayer = await playerLoader().module()({
+        const vPlayer = await playerLoader()?.module({
           refNode: player,
           refNodeInsert: "replace",
           accountId: 6314154063001,
