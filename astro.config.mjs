@@ -3,6 +3,7 @@ import UnoCSS from "unocss/astro";
 import presetUno from "unocss/preset-uno";
 import presetAttributify from "unocss/preset-attributify";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
+import transformerDirectives from "@unocss/transformer-directives";
 
 import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
@@ -17,13 +18,15 @@ export default defineConfig({
           sans: ["Montserrat", "ui-sans-serif", "system-ui"],
         },
         colors: {
-          primary: "hsl(20, 100%, 56%)",
-          surface: "hsl(90, 3%, 12%)",
-          base: "hsl(72, 46%, 98%)",
+          surface: "hsl(var(--clrSurface))",
+          base: "hsl(var(--clrBase))",
+          primary: "hsl(var(--clrPrimary))",
+          secondary: "hsl(var(--clrSecondary))",
+          tertiary: "hsl(var(--clrTertiary))",
         },
       },
       presets: [presetUno(), presetAttributify()],
-      transformers: [transformerVariantGroup()],
+      transformers: [transformerVariantGroup(), transformerDirectives()],
       rules: [
         [
           /^grid-col-fill-(\d+)$/,
@@ -50,6 +53,15 @@ export default defineConfig({
           /^text-(.*)$/,
           ([, c], {theme}) => {
             if (theme.colors[c]) return {color: theme.colors[c]};
+          },
+        ],
+        [
+          // https://unocss.dev/config/theme#usage-in-rules
+          /^bglg-(.*(?=\)$))/,
+          ([, c]) => {
+            return {
+              "background-image": `linear-gradient(${c.replaceAll("_", " ")})`,
+            };
           },
         ],
         [

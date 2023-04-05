@@ -1,9 +1,8 @@
 import type {IVidWithCustom} from "@customTypes/types";
 import {mobileHorizontalPadding, CONTAINER} from "@lib/UI";
-import {playerLoader, setPlayerLoaderModule} from "@lib/store";
-import {For, createEffect, createSignal, onMount} from "solid-js";
+import {playerLoader} from "@lib/store";
+import {For, createSignal, onMount} from "solid-js";
 import {H1, H2} from "@components/Heading";
-import {IconPlay} from "@components/Icons";
 
 // first poster with button that looks like play button
 // vid data not loaded until a chapter is picked
@@ -70,7 +69,12 @@ export function VidPlayer(props: IVidPlayerProps) {
     vjsPlayer().src(vid.sources);
     vjsPlayer().poster(vid.poster);
   }
+  function debug() {
+    console.log(props.vids);
+  }
+
   onMount(async () => {
+    debug();
     if (playerLoader().loaded) {
       const vPlayer = await playerLoader().module({
         refNode: player,
@@ -104,9 +108,6 @@ export function VidPlayer(props: IVidPlayerProps) {
     }
   });
 
-  const transparentOverlay =
-    "linear-gradient(0deg, hsla(20, 100%, 56%, 1) 0%, hsla(20, 100%, 56%, 0) 55%, hsla(20, 100%, 56%, 0) 75%, hsla(20, 100%, 56%, 1) 100%);";
-
   return (
     <div
       class={`grid grid-rows-[auto_auto_1fr] h-full overflow-y-auto overflow-x-hidden ${CONTAINER} sm:(rounded-lg w-full)`}
@@ -128,7 +129,8 @@ export function VidPlayer(props: IVidPlayerProps) {
         class="overflow-x-auto scrollbar-hide min-h-150px"
         title="chapterNums"
       >
-        <ul class="flex flex-nowrap gap-1 items-start content-start py-4 overflow-x-auto scrollbar-hide x-scroll-gradient">
+        {/* bggr-linear-gradient(90deg,rgba(0,0,0,0.9)1%,rgba(0,0,0,0),3%,_rgba(0,0,0,0)_97%,_rgba(0,0,0,0.6)_99%) */}
+        <ul class="flex flex-nowrap gap-3 items-start content-start py-4 overflow-x-auto scrollbar-hide  x-scroll-gradient">
           <For each={currentBook()}>
             {(vid) => {
               return (
@@ -137,9 +139,9 @@ export function VidPlayer(props: IVidPlayerProps) {
                     onClick={() => {
                       changePlayerSrc(vid);
                     }}
-                    class={`rounded-full h-8 w-8 inline-grid place-content-center text-center flex-shrink-0 bg-neutral-400 text-white sm:(w-12 h-12) ${
+                    class={`rounded-full h-8 w-8 inline-grid place-content-center text-center flex-shrink-0 bg-neutral-400 dark:bg-neutral-600 text-white sm:(w-12 h-12) hover:(bg-primary/70 transition scale-110) active:(scale-95) ${
                       vid.chapNum === currentVid().chapNum
-                        ? "bg-neutral-800 transform scale-130 mx-3 transition-colors duration-200"
+                        ? "bg-neutral-800 dark:bg-neutral-900 transform scale-120  transition-colors duration-200"
                         : ""
                     }`}
                   >
@@ -150,38 +152,41 @@ export function VidPlayer(props: IVidPlayerProps) {
             }}
           </For>
         </ul>
-        <div class={`${mobileHorizontalPadding}`}>
+        <div class={`${mobileHorizontalPadding} sm:(py-4)`}>
           <H1 classes="font-bold">{normalizeBookName(currentVid().book)}</H1>
           <p>{formatPlayListName(props.playlist)}</p>
         </div>
       </div>
       <div
         title="bookSelection"
-        class={`${mobileHorizontalPadding} py-2 bg-primary text-base rounded-tr-xl rounded-tl-xl overflow-y-hidden scrollbar-hide min-h-200px`}
+        class={`${mobileHorizontalPadding} py-2 bg-primary dark:bg-surface/05 text-base rounded-tr-xl rounded-tl-xl overflow-y-hidden scrollbar-hide min-h-200px`}
       >
-        <H2>Bible Selection</H2>
-        <p>Choose a book of the bible to watch here.</p>
+        <H2 classes="text-neutral-100 dark:text-neutral-200">
+          Bible Selection
+        </H2>
+        <p class="text-neutral-100 dark:text-neutral-200">
+          Choose a book of the bible to watch here.
+        </p>
         <div class="relative h-full">
           <div
             style={{
-              background: transparentOverlay,
               position: "absolute",
               inset: "0",
               "pointer-events": "none",
               height: "100%",
             }}
-            class="sm:(hidden)"
+            class="y-scroll-gradient sm:(hidden)"
           />
           <ul class="h-full overflow-y-auto scrollbar-hide pt-8 pb-36 sm:(max-h-[50vh])">
             <For each={Object.entries(props.vids)}>
               {([key, book], idx) => {
                 return (
-                  <li class="py-1 w-full border-y border-base md:(text-lg py-2)">
+                  <li class="text-neutral-100 dark:text-neutral-200 py-1 w-full border-y border-base md:(text-lg py-2)">
                     <button
                       onClick={() => setNewBook(book)}
-                      class="inline-flex gap-2 items-center"
+                      class="inline-flex gap-2 items-center hover:(text-surface font-bold underline)"
                     >
-                      <span class="bg-neutral-100 text-primary rounded-full p-3 h-0 w-0 inline-grid place-content-center">
+                      <span class="bg-base text-primary dark:text-primary rounded-full p-4 h-0 w-0 inline-grid place-content-center">
                         {idx() + 1}
                       </span>
                       {normalizeBookName(key)}

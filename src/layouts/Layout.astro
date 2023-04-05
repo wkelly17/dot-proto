@@ -30,22 +30,24 @@ import "../global.css";
     <slot />
   </body>
 </html>
-<style is:global>
-  :root {
-    --accent: 124, 58, 237;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      #da62c4 30%,
-      white 60%
-    );
+
+<script>
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const htmlElement = document.querySelector('html') as HTMLHtmlElement;
+
+function handleColorSchemeChange(e:MediaQueryListEvent) {
+  if (e.matches) {
+    htmlElement.classList.add('dark');
+  } else {
+    htmlElement.classList.remove('dark');
   }
-  html {
-    font-family: system-ui, sans-serif;
-    background-color: #f6f6f6;
-  }
-  code {
-    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-  }
-</style>
+}
+
+// Add the initial class based on the current color scheme
+if (darkModeMediaQuery.matches) {
+  htmlElement.classList.add('dark');
+}
+
+// Add a listener to detect changes to the color scheme
+darkModeMediaQuery.addEventListener("change", handleColorSchemeChange);
+</script>

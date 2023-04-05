@@ -1,3 +1,21 @@
+@media (prefers-color-scheme: light) {
+  :root {
+    --clrSurface: 90, 3%, 12%; /* hsl(90,3%,12%) */
+    --clrBase: 72, 46%, 98%; /* hsl(72, 46%, 98%) */
+    --clrPrimary: 20, 100%, 56%; /* hsl(20, 100%, 56%) */
+    --clrSecondary: 75, 89%, 56%; /* hsl(75, 89%, 56%) */
+    --clrTertiary: 240, 96%, 68%; /* hsl(240, 96%, 68%) */
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clrSurface: 72, 46%, 98%; /* hsl(72, 46%, 98%) */
+    --clrBase: 90, 3%, 12%; /* hsl(90,3%,12%) */
+    --clrPrimary: 20, 100%, 56%; /* hsl(20, 100%, 56%) */
+    --clrSecondary: 75, 89%, 56%; /* hsl(75, 89%, 56%) */
+    --clrTertiary: 240, 96%, 68%; /* hsl(240, 96%, 68%) */
+  }
+}
 /* SELF HOSTED FONTS */
 
 @font-face {
@@ -34,8 +52,8 @@
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
   border-radius: 9999px !important;
-  height: 4rem !important;
-  width: 4rem !important;
+  height: 6rem !important;
+  width: 6rem !important;
   display: inline-grid !important;
   place-content: center !important;
   padding: 0 !important;
@@ -43,6 +61,9 @@
   border: none !important;
   background: #f3f3f3 !important;
   color: #9c9c9c !important;
+}
+.vjs-big-play-button:hover {
+  background: hsl(20, 100%, 56%) !important;
 }
 .vjs-has-started .vjs-big-play-button {
   display: none !important;
@@ -55,13 +76,46 @@
 .vjs-playback-rate {
   display: inline-block !important;
 }
-.x-scroll-gradient {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.2) 1%,
-    rgba(0, 0, 0, 0) 3%,
-    rgba(0, 0, 0, 0) 97%,
-    rgba(0, 0, 0, 0.2) 100%
+.vjs-big-play-button:hover .vjs-icon-placeholder:before {
+  color: white !important;
+}
+.video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+}
+
+/* gradients some things just are simpler outside of utility css, but it's nice to still have easy media queries that line up with uno breakpoitns */
+.y-scroll-gradient {
+  background-image: linear-gradient(
+    0deg,
+    hsla(20, 100%, 56%, 1) 0%,
+    hsla(20, 100%, 56%, 0) 55%,
+    hsla(20, 100%, 56%, 0) 75%,
+    hsla(20, 100%, 56%, 1) 100%
   );
+}
+@media (prefers-color-scheme: dark) {
+  .y-scroll-gradient {
+    background-image: linear-gradient(
+      0deg,
+      hsla(90, 3%, 11%, 1) 0%,
+      hsla(90, 3%, 12%, 0) 55%,
+      hsla(90, 3%, 12%, 0) 75%,
+      hsla(90, 3%, 11%, 1) 100%
+    );
+  }
+}
+@screen sm {
+  .x-scroll-gradient {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.1) 1%,
+      rgba(0, 0, 0, 0) 2%,
+      rgba(0, 0, 0, 0) 97%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  }
 }

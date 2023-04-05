@@ -21,6 +21,7 @@ import { Header } from "@components/Header";
 import { playbackApi } from "src/customTypes/Api";
 import { VidPlayer } from "@components/VidPlayer";
 
+
 const policyKey =
   "BCpkADawqM0bQiUyoSejARSlmKAaReqHw7sRy-4OFGmD8lb2ibVNF-d7H4wtYWIS8NMHOP-3IrfH1mVnUzhxQThtzvPBe-IUyk9EagJcJwWrbIBBCg1tsi8vJFv7_S6GGiTNhDwXFJfwF_W-";
 const pbApi = new playbackApi({
@@ -66,18 +67,33 @@ if (!vids || !vids.length) {
 //     });
 //   })
 //   .flat();
-
-const sortedVids = vids.sort((a, b) =>  {
+ const pattern =
+    /^.*?(\d{2})-(?:\d)?[A-Z]{2,3}_(\d?.+?)_([0-9]{2,3})(?:\..+)?$/;
+type accType = {
+  matching: IVidWithCustom[],
+  notMatching: IVidWithCustom[]
+}
+const filteredByMatchingReferenceId = vids.reduce((accumulator: accType, current) => {  
+  if (pattern.test(String(current.reference_id))) {
+    accumulator.matching.push(current);
+  } else {
+    accumulator.notMatching.push(current);
+  }
+  return accumulator;
+}, {
+  matching: [],
+  notMatching: []
+});
+const sortedVids = filteredByMatchingReferenceId.matching.sort((a, b) =>  {
   // Given this pattern: ASE-X-BENINSL_63-1JN_1Jean_01.mp4
   // match 0 is entire string
   // match 1 is the sort order, 63 ((?:\d)
   // match 2 is the book (1Jean)
   // match 3 is the chapter.
   // optional extension on the end.
-  const pattern =
-    /^.*?(\d{2})-(?:\d)?[A-Z]{2,3}_(\d?.+?)_([0-9]{2,3})(?:\..+)?$/;
+  
 
-  if (!a || !b) return 0;
+
   // /^.*?(\d{2})-(?:0|1)?[A-Z]{2,3}_\d?(.+?)_([0-9]{2,3})(?:\..+)?$/;
   const ref1 = a.reference_id?.toUpperCase();
   const ref2 = b.reference_id?.toUpperCase();
@@ -85,6 +101,7 @@ const sortedVids = vids.sort((a, b) =>  {
   const match = ref1.match(pattern);
   const match2 = ref2.match(pattern);
   if (!match || !match2) {
+    console.log("NO MATCH", ref1, ref2)
     return -1;
   }
   const sortA = Number(match[1]);
@@ -131,11 +148,12 @@ sortedVids.forEach((vid, idx) => {
 const book = Astro.url.searchParams.get('book')
 const chapter = Astro.url.searchParams.get('chapter')
 const bucketized = groupObjectsByKey<IVidWithCustom, "book">(sortedVids, "book");
+bucketized.other = filteredByMatchingReferenceId.notMatching
 // console.log({bucketized})
 ---
 
 <Layout title="Welcome to Astro.">
-<div class="grid grid-rows-[auto_1fr] h-screen sm:(h-auto)" sm="border border-red-400">
+<div class="grid grid-rows-[auto_1fr] h-screen sm:(h-auto)">
 <Header/>
   <div
     class="grid grid-rows-[auto_auto_1fr] overflow-y-auto"
