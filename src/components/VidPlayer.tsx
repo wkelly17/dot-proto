@@ -3,7 +3,6 @@ import {mobileHorizontalPadding, CONTAINER} from "@lib/UI";
 import {playerLoader} from "@lib/store";
 import {For, createSignal, onMount} from "solid-js";
 import {H1, H2} from "@components/Heading";
-import brightcovePlayerLoader from "@brightcove/player-loader";
 
 // first poster with button that looks like play button
 // vid data not loaded until a chapter is picked
@@ -70,42 +69,45 @@ export function VidPlayer(props: IVidPlayerProps) {
     vjsPlayer().src(vid.sources);
     vjsPlayer().poster(vid.poster);
   }
+  function debug() {
+    console.log(props.vids);
+  }
 
   onMount(async () => {
-    // if (playerLoader().loaded) {
     const interval = setInterval(async () => {
-      const vPlayer = await brightcovePlayerLoader({
-        refNode: player,
-        refNodeInsert: "replace",
-        accountId: 6314154063001,
-        playerId: "9mlrvmAybr",
-        controls: true,
-        // embedType: "iframe",
-        embedType: "in-page",
-        options: {
-          responsive: true,
-          fluid: true,
-          // aspectRatio: "1:1",
-          fill: true,
+      if (playerLoader() && playerLoader().loaded) {
+        const vPlayer = await playerLoader().module()({
+          refNode: player,
+          refNodeInsert: "replace",
+          accountId: 6314154063001,
+          playerId: "9mlrvmAybr",
           controls: true,
-          playbackRates: [0.5, 1, 1.5, 2, 2.5],
-          preload: "auto",
-        },
-        // playlistId: "ref:benin-new-testament",
-        // id: 6312743832112,
-        videoId: currentVid().id,
-        embedOptions: {
-          // playlist: true,
-          // responsive: {
-          //   aspectRatio: "1:1",
-          // },
-        },
-      });
-      // set
-      setVjsPlayer(vPlayer.ref);
-      clearInterval(interval);
+          // embedType: "iframe",
+          embedType: "in-page",
+          options: {
+            responsive: true,
+            fluid: true,
+            // aspectRatio: "1:1",
+            fill: true,
+            controls: true,
+            playbackRates: [0.5, 1, 1.5, 2, 2.5],
+            preload: "auto",
+          },
+          // playlistId: "ref:benin-new-testament",
+          // id: 6312743832112,
+          videoId: currentVid().id,
+          embedOptions: {
+            // playlist: true,
+            // responsive: {
+            //   aspectRatio: "1:1",
+            // },
+          },
+        });
+        // set
+        setVjsPlayer(vPlayer.ref);
+        clearInterval(interval);
+      }
     }, 50);
-    // }
   });
 
   return (

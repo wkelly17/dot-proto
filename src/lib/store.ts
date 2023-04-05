@@ -9,7 +9,10 @@ const [downloadHref, setDownloadHref] = createSignal("");
 const [allVideos, setAllVideos] = createSignal();
 
 const [filterQuery, setFilterQuery] = createSignal("");
-const [playerLoader, setPlayerLoaderModule] = createSignal();
+const [playerLoader, setPlayerLoaderModule] = createSignal({
+  loaded: false,
+  module: null,
+});
 
 // HANDLERS
 function manageSelectedLink(
