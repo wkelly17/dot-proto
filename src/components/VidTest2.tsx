@@ -20,7 +20,6 @@ export function Vid2(props: any) {
   // const useVisibilityObserver = createVisibilityObserver(
   //   {threshold: 0.8},
   //   (entry) => {
-  //     console.log({entry});
   //     // do some calculations on the intersection entry
   //     return entry.isIntersecting;
   //   }
@@ -30,7 +29,6 @@ export function Vid2(props: any) {
   // const visible = useVisibilityObserver(() => el);
   // createEffect(async () => {
   //   if (visible() && playerLoader().loaded && !hasInstantiatedPlayer()) {
-  //     console.log("PLAYER LOADER IS AVAILABLE. setting it locally");
   //     setHasInstantiatedPlayer(true);
   //     // debugger;
   //     const pref = await playerLoader().module({

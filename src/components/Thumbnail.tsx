@@ -21,7 +21,6 @@ interface thumbnailProps {
 }
 export function Thumbnail(props: thumbnailProps) {
   // THE MP4 SOURCE FOR BATCH DOWNLOADING. JUST USE THE FIRST MP4 AVAILABLED
-  // console.log(props.vid);
   const mp4s = props.vid.sources.filter((v: any) => {
     return v.container && v.container == "MP4";
   });
@@ -30,7 +29,6 @@ export function Thumbnail(props: thumbnailProps) {
   // FOR DOWNLOADING AND FILENAMES
   const vidNameSlugified = convertToValidFilename(props.vid.name);
 
-  // console.log({useableSrc});
   function manageSource(src: string) {
     const mp4s = props.vid.sources.filter((v: any) => {
       return v.container && v.container == "MP4";
@@ -39,7 +37,6 @@ export function Thumbnail(props: thumbnailProps) {
     const vidId = props.id;
     // debugger;
     // setPlayerSrc(useableSrc[0]);
-    // console.log(props.idx);
     // setPlayerSrc(props.idx);
     setPlayerSrc(props.vid);
   }

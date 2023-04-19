@@ -30,9 +30,7 @@ export function VideoJs(props: any) {
     // const resp = await fetch(tempUrl);
     // const resp2 = await fetch(thing2);
     // const blob = await downloadZip([resp, resp2]).blob();
-    // console.log("FETCHING FROM SW!");
     // const resp = await fetch("/test.zip");
-    // console.log({resp});
     // // // make and click a temporary link to download the Blob
     // const link = document.createElement("a");
     // link.href = URL.createObjectURL(blob);
@@ -89,7 +87,6 @@ export function VideoJs(props: any) {
       // videojs.registerPlugin("playlist", videojsPlaylistPlugin);
       // playerInstance.playlist(sources);
       // // playerInstance.ref.on("pause", () => {
-      // //   console.log("PUASE");
       // // });
       // debugger;
       // playerInstance.ref.Vhs.GOAL_BUFFER_LENGTH = 70;
@@ -108,7 +105,6 @@ export function VideoJs(props: any) {
       // setMp4Src(encoded);
       // playerInstance.ref.playlist(sources);
       // playerInstance.ref.on("pause", () => {
-      //   console.log("PUASE");
       // });
     } else {
       // debugger;
@@ -140,18 +136,15 @@ export function VideoJs(props: any) {
       currentPlayer.poster(playerSrc().poster);
       // setInterval(() => {
       //   let currentPlayer: any = player();
-      //   console.log(currentPlayer.buffered());
       // }, 200);
       // window.setInterval(() => {
       //   let currentPlayer: any = player();
-      //   console.log(currentPlayer.bufferedPercent());
       // }, 100);
 
       // setTimeout(() => {
       //   debugger;
       //   let currentPlayer: any = player();
       //   const currentPl = currentPlayer.preload();
-      //   console.log({currentPl});
       //   currentPlayer.preload("auto");
       //   let newOne = sources[9];
       //   let link = document.createElement("link");
@@ -168,12 +161,8 @@ export function VideoJs(props: any) {
       //   // currentPlayer.loadMedia(testObj);
       // }, 5000);
       // const newSrc = playerSrc();
-      // console.log({newSrc});
       // currentPlayer?.playlist.currentItem(newSrc);
-      // console.log(currentPlayer.currentSrc());
-      // console.log(currentPlayer.currentType());
       // const corresponding = sources[newSrc];
-      // console.log({corresponding});
       // const mp4 = corresponding.sources?.find((src) => {
       //   return src && src.container == "MP4";
       // });

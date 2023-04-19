@@ -2,10 +2,8 @@
 export interface Props {
   title: string;
 }
-// import {pwaInfo} from "virtual:pwa-info";
 
 const {title} = Astro.props;
-// import "video.js/dist/video-js.css";
 import "../global.css";
 ---
 
@@ -17,11 +15,7 @@ import "../global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <!-- <link
-      href="https://unpkg.com/video.js@7/dist/video-js.min.css"
-      rel="stylesheet"
-    /> -->
-    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+    <!-- <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" /> -->
     <script src="/src/pwa.ts"></script>
 
     <!-- {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />} -->

@@ -8,6 +8,7 @@ import transformerDirectives from "@unocss/transformer-directives";
 import solidJs from "@astrojs/solid-js";
 import cloudflare from "@astrojs/cloudflare";
 import AstroPWA from "@vite-pwa/astro";
+import {visualizer} from "rollup-plugin-visualizer";
 
 // https://astro.build/config
 export default defineConfig({
@@ -93,4 +94,12 @@ export default defineConfig({
   adapter: cloudflare({
     mode: "directory",
   }),
+  vite: {
+    plugins: [
+      visualizer({
+        // goal:  ~100kib of HTML/CSS/Fonts (e.g. check network tab for amount loaded), and then ~300-350kib JS gzipped:
+        gzipSize: true,
+      }),
+    ],
+  },
 });

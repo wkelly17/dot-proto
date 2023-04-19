@@ -19,4 +19,4 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
-brightcove-auth-keys/
+ignore-notes.md

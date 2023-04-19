@@ -1,0 +1,155 @@
+---
+import Layout from "@layouts/Layout.astro";
+import type { IVidWithCustom, userPreferencesI } from "@customTypes/types";
+
+
+import {
+  convertToValidFilename,
+  formatDuration,
+  getMp4DownloadSize,
+  groupObjectsByKey,
+} from "../../utils";
+import {PlayerModuleImporter} from "@components/PlayerParent";
+import { Header } from "@components/Header";
+import { playbackApi } from "src/customTypes/Api";
+import { VidPlayer } from "@components/VidPlayer";
+import { getBibleBookSort } from "src/constants";
+const {bookChap} = Astro.params;
+//Regex = Start with any word or digit, then optional . separator, any number of optional digits (bc we want to match just a book e.g mat if given), and then another set of option digits.  Will match 
+// Luk, Luk.2, LUK.2.7, 2jn.1, luk27.  Even the last is fine without the period since we'll just treat the two matches as book/chap
+const bookChapRegex = /^([\d\w]+)(?:\.)?(\d+)?(?:\.)?(\d+)?/i
+const routingParts = bookChap && bookChap.match(bookChapRegex);
+const bookRouting = routingParts && routingParts?.[1]?.toUpperCase()
+const chapRouting = routingParts && Number(routingParts?.[2])
+const verseRouting = routingParts && routingParts?.[3]
+
+let userPreferences: userPreferencesI | null = null;  
+if(Astro.cookies.has("userPreferences")){
+  const cookie = Astro.cookies.get("userPreferences").json()
+	userPreferences = cookie
+}
+
+const policyKey =
+  "BCpkADawqM0bQiUyoSejARSlmKAaReqHw7sRy-4OFGmD8lb2ibVNF-d7H4wtYWIS8NMHOP-3IrfH1mVnUzhxQThtzvPBe-IUyk9EagJcJwWrbIBBCg1tsi8vJFv7_S6GGiTNhDwXFJfwF_W-";
+const pbApi = new playbackApi({
+  baseUrl: "https://edge.api.brightcove.com/playback/v1",
+  baseApiParams: {
+    // headers: [['Accept', `application/json;pk=${policyKey}`]]
+    headers: {
+      "Accept": `application/json;pk=${policyKey}`
+    }
+  }
+})
+const playbackBaseUrl = "https://edge.api.brightcove.com/playback/v1";
+const accountId = "6314154063001";
+const playListId = "1745043212224883810";
+const {playlist} = Astro.params;
+let data; 
+try {
+  const res = await pbApi.accounts.getPlaylistsByIdOrReferenceId(accountId, `ref:will-test`, {
+    limit: 400, 
+  })
+
+  if (res.ok) {
+    data = res.data
+  } else {
+    return new Response(404)
+  }
+} catch (error) {
+  // console.error(error)
+  return new Response(404)
+}
+// type coercion here to add a few extra types below on this vids array. 
+const vids = data.videos as IVidWithCustom[]
+if (!vids || !vids.length) {
+  console.log("no vids")
+  return new Response(404)
+}
+
+ const pattern =
+    /^.*?(\d{2})-(?:\d)?[A-Z]{2,3}_(\d?.+?)_([0-9]{2,3})(?:\..+)?$/;
+type accType = {
+  matching: IVidWithCustom[],
+  notMatching: IVidWithCustom[]
+}
+const filteredByMatchingReferenceId = vids.reduce((accumulator: accType, current) => {  
+  if (pattern.test(String(current.reference_id))) {
+    accumulator.matching.push(current);
+  } else {
+    accumulator.notMatching.push(current);
+  }
+  return accumulator;
+}, {
+  matching: [],
+  notMatching: []
+});
+const sortedVids = filteredByMatchingReferenceId.matching.sort((a, b) =>  {
+	const aCustomBook = a.custom_fields?.book; 
+	const bCustomBook = b.custom_fields?.book;
+	if (!aCustomBook || !bCustomBook) return 0
+	const aBookSort = getBibleBookSort(aCustomBook);
+	const bBookSort = getBibleBookSort(bCustomBook)
+	const aChap = Number(a.custom_fields?.chapter)
+	const bChap = Number(b.custom_fields?.chapter)
+ let retVal
+  if (aBookSort == bBookSort) {
+    retVal =
+      aChap < bChap
+        ? -1
+        : aChap == bChap
+        ? 0
+        : 1;
+  } else {
+    retVal = aBookSort < bBookSort ? -1 : aBookSort == bBookSort ? 0 : 1;
+  }
+  return retVal;
+});
+
+sortedVids.forEach((vid, idx) => {
+  vid.originalIdx = idx;
+  vid.slugName = convertToValidFilename(String(vid.name));
+	vid.book = vid.custom_fields?.book?.toUpperCase()
+	vid.chapter = vid.custom_fields?.chapter
+  // console.log(vid.book , vid.chapNum)
+});
+
+const bucketized = groupObjectsByKey<IVidWithCustom, "book">(sortedVids, "book");
+bucketized.other = filteredByMatchingReferenceId.notMatching
+// const chapRouting = routingParts && routingParts?.[2]
+// const verseRouting = routingParts && routingParts?.[3]
+const defaultBook = bookRouting && bucketized[bookRouting] ? 
+      bucketized[bookRouting] :
+      bucketized[Object.keys(bucketized)[0]];
+
+const defChapIdx = defaultBook.findIndex(chap => Number(chap.chapter) == Number(chapRouting))
+
+
+const defaultChap = defChapIdx > -1 ?  defaultBook[defChapIdx]: defaultBook[0]
+
+
+
+const bookProp = bookRouting ? bookRouting : defaultChap.book;
+const chapProp = String(defaultChap.chapter)
+const initialData = {vids: defaultBook, chap: defaultChap}
+---
+
+<Layout title="Experiments">
+	<!-- <div class="grid grid-rows-[auto_1fr] h-screen sm:(h-auto)">
+		<Header/>
+		<h1 class="text-3xl text-center">Quality Experiments</h1>
+  <div
+    class="grid grid-rows-[auto_auto_1fr] overflow-y-auto"
+  
+  > -->
+
+    <!-- <PlayerModuleImporter client:only="solid-js"> -->
+      <VidPlayer vids={bucketized} playlist={playlist} initialData={initialData} 
+			userPreferences={userPreferences}
+			client:load />
+    <!-- </PlayerModuleImporter> -->
+  <!-- </div>
+</div> -->
+</Layout>
+
+
+<!-- <script define:vars={{ myPlayerUrl }} is:inline src={myPlayerUrl}></script> -->

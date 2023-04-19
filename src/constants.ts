@@ -1,3 +1,5 @@
+import type {CookieOptions} from "@customTypes/types";
+
 export const BibleBookCategories = {
   OT: [
     "GEN",
@@ -80,3 +82,9 @@ const bibleBookSortOrder = Object.values(BibleBookCategories)
     return acc;
   }, {});
 export {bibleBookSortOrder};
+
+export function getBibleBookSort(bookSlug: string) {
+  const normalized = bookSlug.normalize().toUpperCase();
+  const sortOrder = bibleBookSortOrder[normalized];
+  return sortOrder;
+}

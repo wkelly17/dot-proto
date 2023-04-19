@@ -1,5 +1,6 @@
 @media (prefers-color-scheme: light) {
-  :root {
+  :root,
+  :root.light {
     --clrSurface: 90, 3%, 12%; /* hsl(90,3%,12%) */
     --clrBase: 72, 46%, 98%; /* hsl(72, 46%, 98%) */
     --clrPrimary: 20, 100%, 56%; /* hsl(20, 100%, 56%) */
@@ -8,7 +9,8 @@
   }
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root,
+  :root.dark {
     --clrSurface: 72, 46%, 98%; /* hsl(72, 46%, 98%) */
     --clrBase: 90, 3%, 12%; /* hsl(90,3%,12%) */
     --clrPrimary: 20, 100%, 56%; /* hsl(20, 100%, 56%) */
@@ -84,6 +86,35 @@
   justify-content: center;
   align-items: center;
   font-size: 4rem;
+}
+.vjs-progress-control .vjs-mouse-display {
+  /* left: 85px !important; */
+  top: -3.25rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column-reverse !important;
+  font-size: 0.8em !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  height: max-content !important;
+  width: max-content !important;
+  transform: translateX(-50%);
+  padding: 0.25rem;
+}
+.vjs-progress-control .vjs-mouse-display * {
+  background: none;
+}
+.vjs-mouse-display .vjs-time-tooltip {
+  float: none !important;
+  position: static !important;
+  font-size: 1em !important;
+  padding: 0;
+}
+.video-js .vjs-progress-control:hover .vjs-mouse-display {
+  display: flex !important;
+}
+.vjs-progress-control:hover .chapLabelTextHolder,
+.vjs-progress-control:focus .chapLabelTextHolder {
+  display: inline-block;
 }
 
 /* gradients some things just are simpler outside of utility css, but it's nice to still have easy media queries that line up with uno breakpoitns */

@@ -1,4 +1,7 @@
+import type {AnyAsyncFunction, AnyFunction} from "@customTypes/types";
 import {createSignal, createEffect, createMemo} from "solid-js";
+import type {VideoJsPlayer} from "video.js";
+
 const [playerSrc, setPlayerSrc] = createSignal();
 const [player, setPlayer] = createSignal();
 const [selectForDownload, setSelectForDownload] = createSignal(false);
@@ -7,9 +10,25 @@ const [seletedLinksNames, setSelectedLinksNames] = createSignal([]);
 const [selectedLinksSizes, setSeletedLinksSizes] = createSignal([]);
 const [downloadHref, setDownloadHref] = createSignal("");
 const [allVideos, setAllVideos] = createSignal();
+const [downloadPreference, setDownloadPreference] = createSignal({
+  saveToServiceWorker: false,
+  downloadOffline: true,
+  justThisVideo: true,
+  swPayload:
+    null /* arr of vid {name, refid, src, size} objects that sw can digest */,
+});
 
 const [filterQuery, setFilterQuery] = createSignal("");
-const [playerLoader, setPlayerLoaderModule] = createSignal({
+const [playerLoader, setPlayerLoaderModule] = createSignal<{
+  loaded: boolean;
+  module: AnyAsyncFunction<
+    any,
+    {
+      type: string;
+      ref: VideoJsPlayer;
+    }
+  > | null;
+}>({
   loaded: false,
   module: null,
 });
@@ -77,7 +96,6 @@ const filteredPlaylist = createMemo(() => {
         });
       })
       .filter((arr) => arr.length);
-    console.log({filteredByBucket});
     return filteredByBucket;
   }
 });
@@ -91,22 +109,24 @@ function getMp4Src(idx) {
 }
 
 export {
-  playerSrc,
-  setPlayerSrc,
-  player,
-  setPlayer,
-  selectForDownload,
-  setSelectForDownload,
-  selectedLinks,
-  setSelectedLinks,
-  downloadHref,
-  setDownloadHref,
-  allVideos,
-  setAllVideos,
-  manageSelectedLink,
-  batchDownloadHref,
-  filteredPlaylist,
-  setFilterQuery,
+  // playerSrc,
+  // setPlayerSrc,
+  // player,
+  // setPlayer,
+  // selectForDownload,
+  // setSelectForDownload,
+  // selectedLinks,
+  // setSelectedLinks,
+  // downloadHref,
+  // setDownloadHref,
+  // allVideos,
+  // setAllVideos,
+  // manageSelectedLink,
+  // batchDownloadHref,
+  // filteredPlaylist,
+  // setFilterQuery,
   setPlayerLoaderModule,
   playerLoader,
+  downloadPreference,
+  setDownloadPreference,
 };
