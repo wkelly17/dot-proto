@@ -44,15 +44,23 @@ export interface CookieOptions {
 }
 export interface userPreferencesI {
   preferUsingSavedVideoIfAvailable?: boolean;
-  colorScheme?: "DARK" | "LIGHT";
+  prefersDark?: boolean;
+  playbackSpeed?: string;
 }
-export type cssVariables =
-  | "--clrSurface"
-  | "--clrBase"
-  | "--clrPrimary"
-  | "--clrSecondary"
-  | "--clrTertiary";
+export type wholeBookPresets = "BIG" | "SMALL";
+export type IpopulateSwPayload =
+  | {
+      type: "VID";
+      val: string;
+    }
+  | {
+      type: "BOOK";
+      val: wholeBookPresets;
+    };
 
+export type i18nDictWithLangCode = Record<string, i18nDict>;
+
+export type i18nDict = Record<string, string>;
 /* 
   [
   {name: "a"

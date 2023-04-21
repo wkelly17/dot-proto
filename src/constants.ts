@@ -88,3 +88,23 @@ export function getBibleBookSort(bookSlug: string) {
   const sortOrder = bibleBookSortOrder[normalized];
   return sortOrder;
 }
+
+// TODO: CHANGE TO USE ENV VARS FOR PLAYER ID AND ACCOUNT ID
+export const PLAYER_LOADER_OPTIONS = {
+  // refNode: playerRef,
+  refNodeInsert: "replace",
+  accountId: 6314154063001,
+  playerId: "9mlrvmAybr",
+  controls: true,
+  embedType: "in-page",
+  options: {
+    responsive: true,
+    fluid: true,
+    fill: true,
+    controls: true,
+    playbackRates: [0.5, 1, 1.5, 2, 2.5],
+    preload: "auto",
+  },
+  // id: 6312743832112,
+  // videoId: currentVid().id,
+};

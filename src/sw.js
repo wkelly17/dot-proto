@@ -35,7 +35,7 @@ precacheAndRoute(precacheUrls);
 // });
 
 self.addEventListener("fetch", async (event) => {
-  if (event.request.url.match(/2test\.zip(\?.*)?$/)) {
+  if (event.request.url.match(/sw-handle-saving/)) {
     async function handleFormRequest() {
       const formData = await event.request.text();
       const parameterized = new URLSearchParams(formData);

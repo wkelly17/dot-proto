@@ -9,3 +9,4 @@ registerSW({
     console.log("PWA application ready to work offline");
   },
 });
+// \.zip(\?.*)?$

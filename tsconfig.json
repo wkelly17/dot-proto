@@ -14,7 +14,9 @@
       "@layouts/*": ["src/layouts/*"],
       "@components/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
-      "@customTypes/*": ["src/customTypes/*"]
+      "@customTypes/*": ["src/customTypes/*"],
+      "@utils": ["src/lib/utils.ts"],
+      "@i18n/*": ["src/i18n/*"]
     }
   }
 }

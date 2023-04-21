@@ -18,7 +18,7 @@ export function SelectDev() {
       name="fruit"
       options={currentMp4Sources()}
       optionValue="size"
-      optionTextValue={(val) => val.size}
+      optionTextValue={(val) => String(val.size)}
       placeholder="Select mp4 quality"
       valueComponent={(props) => props.item.rawValue.size}
       itemComponent={(props) => (

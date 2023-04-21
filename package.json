@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": "^17"
+    "node": "^18"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,29 +20,31 @@
     "@astrojs/solid-js": "^2.1.0",
     "@brightcove/player-loader": "^1.8.0",
     "@kobalte/core": "^0.8.2",
+    "@solid-primitives/i18n": "^1.2.4",
     "@solid-primitives/intersection-observer": "^2.0.11",
-    "astro": "^2.1.9",
+    "@unocss/reset": "^0.51.5",
+    "astro": "^2.3.0",
     "client-zip": "^2.3.1",
-    "solid-js": "^1.7.1"
+    "solid-js": "^1.7.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230321.0",
+    "@cloudflare/workers-types": "^4.20230404.0",
     "@types/video.js": "^7.3.51",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "@unocss/preset-attributify": "^0.50.6",
-    "@unocss/transformer-directives": "^0.50.6",
-    "@unocss/transformer-variant-group": "^0.50.6",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@unocss/preset-attributify": "^0.51.5",
+    "@unocss/transformer-directives": "^0.51.5",
+    "@unocss/transformer-variant-group": "^0.51.5",
     "@vite-pwa/astro": "^0.0.5",
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "eslint-plugin-astro": "^0.26.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-solid": "^0.12.0",
+    "eslint-plugin-solid": "^0.12.1",
     "rollup-plugin-visualizer": "^5.9.0",
-    "typescript": "^5.0.3",
-    "unocss": "^0.50.6",
+    "typescript": "^5.0.4",
+    "unocss": "^0.51.5",
     "vite-plugin-pwa": "^0.14.7",
     "workbox-core": "^6.5.4",
-    "wrangler": "^2.13.0"
+    "wrangler": "^2.16.0"
   }
 }

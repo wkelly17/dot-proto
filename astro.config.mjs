@@ -1,7 +1,6 @@
 import {defineConfig} from "astro/config";
 import UnoCSS from "unocss/astro";
 import presetUno from "unocss/preset-uno";
-import presetAttributify from "unocss/preset-attributify";
 import transformerVariantGroup from "@unocss/transformer-variant-group";
 import transformerDirectives from "@unocss/transformer-directives";
 
@@ -26,7 +25,7 @@ export default defineConfig({
           tertiary: "hsl(var(--clrTertiary))",
         },
       },
-      presets: [presetUno(), presetAttributify()],
+      presets: [presetUno()],
       transformers: [transformerVariantGroup(), transformerDirectives()],
       rules: [
         [
@@ -95,6 +94,12 @@ export default defineConfig({
     mode: "directory",
   }),
   vite: {
+    // ssr: {
+    //   noExternal: ["@kobalte/core"],
+    // },
+    define: {
+      "process.env.SECRET": process.env.SECRET,
+    },
     plugins: [
       visualizer({
         // goal:  ~100kib of HTML/CSS/Fonts (e.g. check network tab for amount loaded), and then ~300-350kib JS gzipped:
